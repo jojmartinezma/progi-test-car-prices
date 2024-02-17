@@ -5,6 +5,8 @@ VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "car-prices-backend", "car-prices-backend\car-prices-backend.csproj", "{46FA5A68-849B-4815-97B6-19078F2F81F1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "car-prices-backend-tests", "car-prices-backend-tests\car-prices-backend-tests.csproj", "{64C1B9D8-7147-4A17-ACD1-5F280CDDDDB5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{46FA5A68-849B-4815-97B6-19078F2F81F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46FA5A68-849B-4815-97B6-19078F2F81F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46FA5A68-849B-4815-97B6-19078F2F81F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64C1B9D8-7147-4A17-ACD1-5F280CDDDDB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64C1B9D8-7147-4A17-ACD1-5F280CDDDDB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64C1B9D8-7147-4A17-ACD1-5F280CDDDDB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64C1B9D8-7147-4A17-ACD1-5F280CDDDDB5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
