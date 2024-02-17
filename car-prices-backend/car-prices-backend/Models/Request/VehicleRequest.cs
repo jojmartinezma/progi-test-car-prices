@@ -7,7 +7,7 @@
     }
     public class VehicleRequest
     {
-        public string VehicleBasePrice { get; set; }
+        public double VehicleBasePrice { get; set; }
         public vehicleTypeEnum VehicleType { get; set; }
     }
 }

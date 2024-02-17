@@ -5,7 +5,7 @@
         public float Basic { get; set; }
         public float Special { get; set; }
         public float Asosiation { get; set; }
-        public float Storage { get; set; }
+        public float Storage { get; } = 100;
         public double Total { get; set; }
     }
 }
