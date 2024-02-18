@@ -1,1 +1,35 @@
-
+<div class="card-div">
+  <mat-card>
+    <mat-card-title>Vehicle price fees</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="vehicleFeesForm" (ngSubmit)="processForm()">
+        <mat-form-field>
+          <mat-label>Vehicle base price</mat-label>
+          <input
+            type="text"
+            matInput
+            placeholder="Vehicle base Price"                
+            formControlName="vehicleBasePrice"
+            >
+            @if (!vehicleFeesForm.controls['vehicleBasePrice'].valid) {
+              <mat-error>Please enter a valid value</mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>vehicle type</mat-label>
+          <mat-select>
+            <mat-option value="Common">Common</mat-option>
+            <mat-option value="Luxury">Luxury</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="button">
+          <button type="submit"
+                  mat-button
+                  mat-raised-button
+                  color="primary">Calculate
+          </button>
+      </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
