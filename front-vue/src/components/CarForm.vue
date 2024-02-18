@@ -99,7 +99,6 @@ export default {
   },
   methods: {
     calculatePrice() {
-
       // call api
       if(this.vehicleType && this.vehicleBasePrice) {
         axios.post('https://localhost:7065/api/RatesCalculation', {
@@ -123,11 +122,11 @@ export default {
     },
 
     setApiResults(response) {
-      this.apiResults.basic = response.basic;
-      this.apiResults.special = response.special;
-      this.apiResults.asosiation = response.asosiation;
-      this.apiResults.storage = response.storage;
-      this.apiResults.total = response.total;
+      this.apiResults.basic = response.basic.toFixed(2);
+      this.apiResults.special = response.special.toFixed(2);
+      this.apiResults.asosiation = response.asosiation.toFixed(2);
+      this.apiResults.storage = response.storage.toFixed(2);
+      this.apiResults.total = response.total.toFixed(2);
       this.apiResults.status = true;
     },
 
