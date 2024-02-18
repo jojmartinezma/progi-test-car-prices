@@ -19,7 +19,16 @@ builder.Services.AddSwaggerGen(options =>
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "CAR PRICES SERVICES API", Version = "v1" });
 });
 
+// set cors
+builder.Services.AddCors(options => options.AddPolicy("AllowWebapp",
+                            builder => builder.AllowAnyOrigin()
+                                              .AllowAnyHeader()
+                                              .AllowAnyMethod()));
 var app = builder.Build();
+
+// enable cors
+app.UseCors("AllowWebapp");
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
