@@ -29,7 +29,6 @@ namespace car_prices_backend_tests
         public void CalculateAssociationPrice_andReturnCorrectValue(float vehicleBasePrice, float expected)
         {
             // Arrange
-
             var ratesService = new RatesService();
             var request = new VehicleRequest { VehicleBasePrice = vehicleBasePrice };
 
@@ -40,30 +39,83 @@ namespace car_prices_backend_tests
             Assert.Equal(expected, result);
         }
 
-        //[Fact]
-        //public async Task CalculateRates_ShouldReturnCorrectResponse()
-        //{
-        //    // Arrange
-        //    var request = new VehicleRequest
-        //    {
-        //        VehicleBasePrice = 1000,
-        //        VehicleType = vehicleTypeEnum.Common // or Luxury for different scenarios
-        //                                             // Add other properties as needed
-        //    };
+        [Theory]
+        [InlineData(1000, vehicleTypeEnum.Common, 20)]
+        [InlineData(398, vehicleTypeEnum.Common, 7.96)]
+        [InlineData(501, vehicleTypeEnum.Common, 10.02)]
+        [InlineData(57, vehicleTypeEnum.Common, 1.14)]
+        [InlineData(1800.00, vehicleTypeEnum.Luxury, 72.00)]
+        [InlineData(1100, vehicleTypeEnum.Common, 22.00)]
+        [InlineData(1000000.00, vehicleTypeEnum.Luxury, 40000.00)]
+        public void CalculateSpecialFee_andReturnCorrectValue(float vehicleBasePrice, vehicleTypeEnum vehicleTypeEnum, float expected)
+        {
+            // Arrange
+            var ratesService = new RatesService();
+            var request = new VehicleRequest { 
+                VehicleBasePrice = vehicleBasePrice,
+                VehicleType = vehicleTypeEnum
+            };
 
-        //    var ratesService = new RatesService();
+            // Act
+            var result = InvokePrivateMethod<float>(ratesService, "CalculateSpecialFee", request);
 
-        //    // Act
-        //    var result = await ratesService.CalculateRates(request);
+            // Assert
+            Assert.Equal(expected, result);
+        }
 
-        //    // Assert
-        //    Assert.NotNull(result);
-        //    // Add more assertions based on the expected values
-        //    Assert.Equal(expectedBasicFee, result.Basic);
-        //    Assert.Equal(expectedSpecialFee, result.Special);
-        //    Assert.Equal(expectedAssociationPrice, result.Asosiation);
-        //    Assert.Equal(expectedTotal, result.Total);
-        //}
+        [Theory]
+        [InlineData(1000, vehicleTypeEnum.Common, 50)]
+        [InlineData(398, vehicleTypeEnum.Common, 39.80)]
+        [InlineData(501, vehicleTypeEnum.Common, 50.00)]
+        [InlineData(57, vehicleTypeEnum.Common, 10)]
+        [InlineData(1800.00, vehicleTypeEnum.Luxury, 180)]
+        [InlineData(1100, vehicleTypeEnum.Common, 50)]
+        [InlineData(1000000.00, vehicleTypeEnum.Luxury, 200.00)]
+        public void CalculateCalculateBasicFee_andReturnCorrectValue(float vehicleBasePrice, vehicleTypeEnum vehicleTypeEnum, float expected)
+        {
+            // Arrange
+            var ratesService = new RatesService();
+            var request = new VehicleRequest
+            {
+                VehicleBasePrice = vehicleBasePrice,
+                VehicleType = vehicleTypeEnum
+            };
+
+            // Act
+            var result = InvokePrivateMethod<float>(ratesService, "CalculateBasicFee", request);
+
+            // Assert
+            Assert.Equal(expected, result);
+        }
+
+        [Theory]
+        [InlineData(1000, vehicleTypeEnum.Common, 1180)]
+        [InlineData(398, vehicleTypeEnum.Common, 550.76)]
+        [InlineData(501, vehicleTypeEnum.Common, 671.02)]
+        [InlineData(57, vehicleTypeEnum.Common, 173.14)]
+        [InlineData(1800.00, vehicleTypeEnum.Luxury, 2167.00)]
+        [InlineData(1100, vehicleTypeEnum.Common, 1287.00)]
+        [InlineData(1000000.00, vehicleTypeEnum.Luxury, 1040320.00)]
+        public async Task CalculateRates_ShouldReturnCorrectResponse(float vehicleBasePrice, vehicleTypeEnum vehicleTypeEnum, double expected)
+        {
+            // Arrange
+            var request = new VehicleRequest
+            {
+                VehicleBasePrice = vehicleBasePrice,
+                VehicleType = vehicleTypeEnum
+            };
+
+            var ratesService = new RatesService();
+
+            // Act
+            var result = await ratesService.CalculateRates(request);
+
+            // Assert
+            Assert.NotNull(result);
+
+            // validations of total $
+            Assert.Equal(expected, result.Total);
+        }
     }
 }
 
