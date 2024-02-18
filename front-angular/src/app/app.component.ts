@@ -6,6 +6,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
+import { VehicleResponse } from './models/vehicleResponse';
+import { VehicleServiceService } from './services/vehicle-service.service';
+import { VehicleRequest } from './models/vehicleRequest';
 
 @Component({
   selector: 'app-root',
@@ -26,13 +29,24 @@ import { MatButtonModule } from '@angular/material/button';
 export class AppComponent implements OnInit{
 
   public vehicleFeesForm!: FormGroup;
+  public vehicleTypeList: Array<string> = ['Common', 'Luxury'];
+  public resultApi: boolean = false;
+  public vehicleResponse!: VehicleResponse;
 
-  constructor() {
-
+  constructor(private _vehicleService: VehicleServiceService) {
   }
 
   ngOnInit(): void {
     this.initFormGroup();
+
+    // subscribe to form changes
+    this.vehicleFeesForm.statusChanges.subscribe((status) => {
+      if(status === 'VALID') {
+        this.processForm();
+      } else {
+        this.resultApi = false;
+      }
+    })
   }
 
   private initFormGroup() {
@@ -43,6 +57,30 @@ export class AppComponent implements OnInit{
   }
 
   public processForm() {
+    if(this.vehicleFeesForm.valid === false) {
+      return;
+    }
+
+    // call api
+    const vehicleRequest: VehicleRequest = new VehicleRequest({
+      vehicleBasePrice: this.vehicleFeesForm.controls['vehicleBasePrice'].value,
+      vehicleType: this.vehicleFeesForm.controls['vehicleType'].value,
+    });
+
+    this._vehicleService.calculatePrice(vehicleRequest).subscribe({
+      next: (res) => {
+        if(!res) {
+          this.resultApi = false;
+        }
+        
+        // set values
+        this.vehicleResponse = res as VehicleResponse;
+        this.resultApi = true;
+      },
+      error: () => {
+        this.resultApi = false;
+      }
+    })
 
   }
 }

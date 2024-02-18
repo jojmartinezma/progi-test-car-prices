@@ -17,19 +17,35 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>vehicle type</mat-label>
-          <mat-select>
-            <mat-option value="Common">Common</mat-option>
-            <mat-option value="Luxury">Luxury</mat-option>
+          <mat-select formControlName="vehicleType">
+            @for (vehicleType of vehicleTypeList; track vehicleType) {
+              <mat-option [value]="vehicleType">{{vehicleType}}</mat-option>
+            }
           </mat-select>
         </mat-form-field>
         <div class="button">
           <button type="submit"
                   mat-button
                   mat-raised-button
+                  [disabled]="!vehicleFeesForm.valid"
                   color="primary">Calculate
           </button>
-      </div>
+        </div>
       </form>
+
+      <!-- this is the result -->
+      <br/>
+      <div class="apiResults" *ngIf="resultApi">
+        <b>Basic: </b> {{ vehicleResponse.basic }} <br/>
+        <b>Special: </b> {{ vehicleResponse.special }} <br/>
+        <b>Association: </b> {{ vehicleResponse.asosiation }} <br/>
+        <b>Storage: </b> {{ vehicleResponse.storage }} <br/> <br/>
+        <div class="total">
+          <b>Total: </b> <span class="total-value">{{ vehicleResponse.total }} <br/></span>
+        </div>
+      </div>
+
     </mat-card-content>
   </mat-card>
 </div>
+
